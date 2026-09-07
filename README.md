@@ -1,2 +1,0 @@
-# MandarinSite
-Site from MandarinTeam

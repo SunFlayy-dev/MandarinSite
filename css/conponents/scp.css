@@ -1,0 +1,92 @@
+.scp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+}
+
+.scp-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+.scp-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary-red);
+    opacity: 0.6;
+}
+.scp-card:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+.scp-card .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+}
+.scp-card .head .number {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+.scp-card .class {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    border: 1px solid;
+}
+.class-safe {
+    color: #34d399;
+    border-color: #22c55e;
+    background: rgba(34, 197, 94, 0.12);
+}
+.class-euclid {
+    color: #fbbf24;
+    border-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.12);
+}
+.class-keter {
+    color: #f87171;
+    border-color: #e02b2b;
+    background: rgba(224, 43, 43, 0.12);
+}
+.class-thaumiel {
+    color: #c084fc;
+    border-color: #8b5cf6;
+    background: rgba(139, 92, 246, 0.12);
+}
+.scp-card .name {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text-white);
+}
+.scp-card .desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+    line-height: 1.5;
+}
+.scp-card .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
+    font-size: 0.85rem;
+}
