@@ -1,79 +1,40 @@
-// js/modules/stats.js
+export function initHero() {
+    const playerCountEl = document.getElementById('playerCount');
+    if (!playerCountEl) return;
 
-class SiteStats {
-    constructor() {
-        this.visitors = 0;
-        this.pageViews = 0;
-        this.lastUpdated = null;
-        this.storageKey = 'siteStats';
-        this.visitorKey = 'visitorId';
-        this.init();
-    }
-
-    init() {
-        if (!localStorage.getItem(this.visitorKey)) {
-            localStorage.setItem(this.visitorKey, 'visitor_' + Date.now());
-        }
-        this.updateStats();
-        this.renderStats();
-        setInterval(() => this.updateStats(), 30000);
-    }
-
-    updateStats() {
+    // Имитация обновления онлайна
+    function updatePlayerCount() {
         const base = 42;
         const variation = Math.floor(Math.random() * 16);
-        this.visitors = Math.min(base + variation, 64);
-        this.pageViews += Math.floor(Math.random() * 3) + 1;
-        this.lastUpdated = new Date().toLocaleString('ru-RU');
-        
-        localStorage.setItem(this.storageKey, JSON.stringify({
-            visitors: this.visitors,
-            pageViews: this.pageViews,
-            lastUpdated: this.lastUpdated
-        }));
-        
-        this.renderStats();
+        const count = Math.min(base + variation, 64);
+        playerCountEl.textContent = count;
     }
 
-    renderStats() {
-        const container = document.querySelector('#siteStats');
-        if (!container) return;
+    // Обновляем сразу и каждые 8 секунд
+    updatePlayerCount();
+    setInterval(updatePlayerCount, 8000);
 
-        container.innerHTML = `
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <i class="fa-solid fa-users"></i>
-                    <span class="stat-num">${this.visitors}</span>
-                    <span class="stat-label">Онлайн</span>
-                </div>
-                <div class="stat-box">
-                    <i class="fa-solid fa-eye"></i>
-                    <span class="stat-num">${this.pageViews}</span>
-                    <span class="stat-label">Просмотров</span>
-                </div>
-                <div class="stat-box">
-                    <i class="fa-solid fa-clock"></i>
-                    <span class="stat-num">${this.lastUpdated || '—'}</span>
-                    <span class="stat-label">Обновлено</span>
-                </div>
-            </div>
-        `;
-
-        const playerEl = document.getElementById('playerCount');
-        if (playerEl) playerEl.textContent = this.visitors;
+    // Копирование IP
+    const copyBtn = document.querySelector('.copy-btn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+            const ip = '';
+            try {
+                await navigator.clipboard.writeText(ip);
+                copyBtn.innerHTML = '<i class="fa-regular fa-check"></i> Скопировано!';
+                setTimeout(() => {
+                    copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Копировать';
+                }, 2000);
+            } catch (err) {
+                console.error('Ошибка копирования:', err);
+            }
+        });
     }
 }
 
-export const siteStats = new SiteStats();
-
+// Инициализация при загрузке
 document.addEventListener('DOMContentLoaded', () => {
-    if (!document.querySelector('#siteStats')) {
-        const container = document.querySelector('.container');
-        if (container) {
-            const div = document.createElement('div');
-            div.id = 'siteStats';
-            container.prepend(div);
-        }
+    if (document.querySelector('#page-home')) {
+        initHero();
     }
-    siteStats.init();
 });
